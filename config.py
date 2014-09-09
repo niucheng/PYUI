@@ -9,18 +9,27 @@ dir = os.path.dirname(os.path.abspath(__file__))
 file = os.path.join(dir, 'pyui', 'config.py')
 
 if __name__ == "__main__":
-    f = open('./pyui/config.py', 'w')
-    f.write('#!/usr/bin/env python\n')
-    f.write('# coding: utf-8\n')
-    f.write('\n')
-    f.write('"""This python script is generated automatically by ../config.py\n')
-    f.write('\n')
-    f.write('You should not modify this file manually, please."""\n')
-    f.write('\n')
-    f.write('import constants\n')
-    f.write('\n')
-    f.write('host = constants.LINUX\n')
-    f.write('ui = constants.CLI\n')
-    f.write('\n')
+    str = '''\
+#!/usr/bin/env python
+# coding: utf-8
+
+"""This python script file is generated automatically by ../config.py
+
+Please do not modify this file manually, or it will be overwritten."""
+
+import sys
+
+import constants
+
+host = sys.platform
+ver = sys.version_info.major
+ui = constants.%s
+
+''' % 'CLI'
+
+    f = open(file, 'w')
+    f.write(str)
     f.close()
+
+    print ('Done generate config script file: %s' % file)
 

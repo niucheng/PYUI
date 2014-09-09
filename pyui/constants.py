@@ -12,3 +12,5 @@ GUI = 2
 
 TITLE = 'PYUI'
 
+OK = 'OK'
+
