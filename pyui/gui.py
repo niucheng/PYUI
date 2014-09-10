@@ -37,7 +37,7 @@ def _get(prompt, default='', type='', title=constants.TITLE):
     r = tk.Tk()
     # Hide
     r.withdraw()
-    def kill():
+    def kill(event=None):
         global ret
         ret = e.get()
         r.destroy()
@@ -45,8 +45,10 @@ def _get(prompt, default='', type='', title=constants.TITLE):
     r.protocol('WM_DELETE_WINDOW', kill)
     r.resizable(0, 0)#(width=None, height=None)
     e = tk.Entry(r, bd=5, width=35)
+    e.bind('<Return>', kill)
     e.pack()
     b = tk.Button(r, text=constants.OK, width=35, command=kill)
+    b.bind('<Return>', kill)
     b.pack()
     r.title(title)
     e.insert(tk.END, default)

@@ -20,35 +20,35 @@ elif os.getenv('ConEmuANSI') == 'ON':
 else:  # no ANSI support
     ansi_color = color.ANSI_NONE_COLOR_SET
 
-def puts(str, end='\n'):
+def puts(s, end='\n'):
     if end == '\n':
-        print str % ansi_color
+        print str(s) % ansi_color
     else:
-        print str % ansi_color,
+        print str(s) % ansi_color,
 
-def info(str, title=''):
+def info(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_INFO),
                           color.ANSI_COLOR_INFO,
                           '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % str if str else ''))
+                          ' %s' % s if str(s) else ''))
 
-def warn(str, title=''):
+def warn(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_WARN),
                           color.ANSI_COLOR_WARN,
                           '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % str if str else ''))
+                          ' %s' % s if str(s) else ''))
 
-def error(str, title=''):
+def error(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_ERROR),
                           color.ANSI_COLOR_FAIL,
                           '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % str if str else ''))
+                          ' %s' % s if str(s) else ''))
 
-def success(str, title=''):
+def success(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_SUCCESS),
                           color.ANSI_COLOR_OK,
                           '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % str if str else ''))
+                          ' %s' % s if str(s) else ''))
 
 def _get(prompt, default='', type='', title=''):
     return input ('%s [%s%s] ' % (prompt,
@@ -56,8 +56,10 @@ def _get(prompt, default='', type='', title=''):
                                   ': %s' % default if default else ''))
 
 def gets(prompt, default='', type='String', title=''):
-    return _get(prompt, default, type, title)
+    ret =  _get(prompt, default, type, title)
+    return ret if ret else default
 
 def get_int(prompt, default=0, type='Number', title=''):
-    return _get(prompt, str(default), type, title)
+    ret = _get(prompt, str(default), type, title)
+    return ret if ret else default
 
