@@ -1,39 +1,44 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import Tkinter as tk
+import sys
 
-import config
+python2 = sys.version_info.major < 3
 
-if config.ver < 3:
+if python2:
+    import Tkinter as tk
     import tkMessageBox as tkmb
+    #
+    import color
+    import constants
 else:
-    from Tkinter import messagebox as tkmb
-
-import color
-import constants
+    import tkinter as tk
+    from tkinter import messagebox as tkmb
+    #
+    from pyui import color
+    from pyui import constants
 
 root = tk.Tk()
 root.withdraw()
 
-def puts(str, title=constants.TITLE):
-    tkmb.showinfo(title, str % color.ANSI_NONE_COLOR_SET)
-
-def info(str, title=color.ANSI_COLOR_INFO):
-    tkmb.showinfo(title, str, parent=root)
-
-def warn(str, title=color.ANSI_COLOR_WARN):
-    tkmb.showwarning(title, str, parent=root)
-
-def error(str, title=color.ANSI_COLOR_ERROR):
-    tkmb.showerror(title, str, parent=root)
-
-def success(str, title=color.ANSI_COLOR_SUCCESS):
-    tkmb.showinfo(title, str, parent=root)
-
 ret = None
 
-def _get(prompt, default='', type='', title=constants.TITLE):
+def puts(s, title=constants.TITLE):
+    tkmb.showinfo(title, str(s) % color.ANSI_NONE_COLOR_SET)
+
+def info(s, title=color.ANSI_COLOR_INFO):
+    tkmb.showinfo(title, str(s), parent=root)
+
+def warn(s, title=color.ANSI_COLOR_WARN):
+    tkmb.showwarning(title, str(s), parent=root)
+
+def error(s, title=color.ANSI_COLOR_ERROR):
+    tkmb.showerror(title, str(s), parent=root)
+
+def success(s, title=color.ANSI_COLOR_SUCCESS):
+    tkmb.showinfo(title, str(s), parent=root)
+
+def _get(prompt, default='', ret_type='', title=constants.TITLE):
     r = tk.Tk()
     # Hide
     r.withdraw()
@@ -44,6 +49,8 @@ def _get(prompt, default='', type='', title=constants.TITLE):
         r.quit()
     r.protocol('WM_DELETE_WINDOW', kill)
     r.resizable(0, 0)#(width=None, height=None)
+    l = tk.Label(r, text=prompt, width=35, anchor='w')
+    l.pack()
     e = tk.Entry(r, bd=5, width=35)
     e.bind('<Return>', kill)
     e.pack()
@@ -69,9 +76,9 @@ def _get(prompt, default='', type='', title=constants.TITLE):
     #
     return ret
 
-def gets(prompt, default='', type='String', title=constants.TITLE):
-    return _get(prompt, default, type, title)
+def gets(prompt, default='', ret_type='String', title=constants.TITLE):
+    return _get(prompt, default, ret_type, title)
 
-def get_int(prompt, default=0, type='Number', title=constants.TITLE):
-    return _get(prompt, str(default), type, title)
+def get_int(prompt, default=0, ret_type='Number', title=constants.TITLE):
+    return _get(prompt, str(default), ret_type, title)
 

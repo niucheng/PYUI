@@ -2,10 +2,19 @@
 # coding: utf-8
 
 import os
+import sys
 
-import color
+python2 = sys.version_info.major < 3
 
-input = raw_input
+if python2:
+    import color
+    import puts2 as out
+else:
+    from pyui import color
+    from pyui import puts3 as out
+
+if python2:
+    input = raw_input
 
 # Detect ANSI environment support
 ansi_color = color.ANSI_COLOR_SET
@@ -21,45 +30,42 @@ else:  # no ANSI support
     ansi_color = color.ANSI_NONE_COLOR_SET
 
 def puts(s, end='\n'):
-    if end == '\n':
-        print str(s) % ansi_color
-    else:
-        print str(s) % ansi_color,
+    out.puts(str(s) % ansi_color, end)
 
 def info(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_INFO),
-                          color.ANSI_COLOR_INFO,
-                          '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % s if str(s) else ''))
+                         color.ANSI_COLOR_INFO,
+                         '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
+                         ' %s' % s if str(s) else ''))
 
 def warn(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_WARN),
-                          color.ANSI_COLOR_WARN,
-                          '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % s if str(s) else ''))
+                         color.ANSI_COLOR_WARN,
+                         '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
+                         ' %s' % s if str(s) else ''))
 
 def error(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_ERROR),
-                          color.ANSI_COLOR_FAIL,
-                          '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % s if str(s) else ''))
+                         color.ANSI_COLOR_FAIL,
+                         '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
+                         ' %s' % s if str(s) else ''))
 
 def success(s, title=''):
     puts('[%s%s%s]%s' % ('%s(%s)s' % ('%', color.ANSI_COLOR_SUCCESS),
-                          color.ANSI_COLOR_OK,
-                          '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
-                          ' %s' % s if str(s) else ''))
+                         color.ANSI_COLOR_OK,
+                         '%s(%s)s' % ('%', color.ANSI_COLOR_NORMAL),
+                         ' %s' % s if str(s) else ''))
 
-def _get(prompt, default='', type='', title=''):
+def _get(prompt, default='', ret_type='', title=''):
     return input ('%s [%s%s] ' % (prompt,
-                                  type,
-                                  ': %s' % default if default else ''))
+                                  ret_type,
+                                  ': %s' % default if str(default) else ''))
 
-def gets(prompt, default='', type='String', title=''):
-    ret =  _get(prompt, default, type, title)
-    return ret if ret else default
+def gets(prompt, default='', ret_type='String', title=''):
+    ret =  _get(prompt, default, ret_type, title)
+    return ret if str(ret) else default
 
-def get_int(prompt, default=0, type='Number', title=''):
-    ret = _get(prompt, str(default), type, title)
-    return ret if ret else default
+def get_int(prompt, default=0, ret_type='Number', title=''):
+    ret = _get(prompt, str(default), ret_type, title)
+    return ret if str(ret) else default
 

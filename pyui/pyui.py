@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import config
-import constants
+import sys
+
+python2 = sys.version_info.major < 3
+
+if python2:
+    import config
+    import constants
+else:
+    from pyui import config
+    from pyui import constants
 
 if config.host == constants.LINUX:
     pass
@@ -10,7 +18,10 @@ else:
     pass
 
 if config.ui == constants.GUI and True:
-    import gui
+    if python2:
+        import gui
+    else:
+        from pyui import gui
     puts = gui.puts
     info = gui.info
     warn = gui.warn
@@ -19,7 +30,10 @@ if config.ui == constants.GUI and True:
     gets = gui.gets
     get_int = gui.get_int
 else:
-    import cli
+    if python2:
+        import cli
+    else:
+        from pyui import cli
     puts = cli.puts
     info = cli.info
     warn = cli.warn

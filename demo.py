@@ -36,9 +36,9 @@ if __name__ == "__main__":
     pyui.info(pyui.get_int(''))
     pyui.info(pyui.get_int('Port'))
     pyui.info(pyui.get_int('', ''))
-    pyui.info(pyui.get_int('Port', 22))
+    pyui.info(pyui.get_int('Port', 23))
     pyui.info(pyui.get_int('', '', ''))
-    pyui.info(pyui.get_int('Port', 22, 'INT'))
+    pyui.info(pyui.get_int('Port', 23, 'INT'))
     pyui.info(pyui.get_int('', '', '', ''))
-    pyui.info(pyui.get_int('Port', 22, 'INT', '!'))
+    pyui.info(pyui.get_int('Port', 23, 'INT', '!'))
 

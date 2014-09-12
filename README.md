@@ -1,7 +1,9 @@
 PYUI
 ====
 
-Python user interface including CLI and GUI.
+Python User Interface including CLI and GUI.
+
+Compatible with Python 2.x and Python 3.x, enjoy!
 
 DEMO
 ====

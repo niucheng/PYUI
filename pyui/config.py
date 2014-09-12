@@ -7,9 +7,11 @@ Please do not modify this file manually, or it will be overwritten."""
 
 import sys
 
-import constants
+if sys.version_info.major < 3:
+    import constants
+else:
+    from pyui import constants
 
 host = sys.platform
 ver = sys.version_info.major
-ui = constants.GUI
-
+ui = constants.CLI
